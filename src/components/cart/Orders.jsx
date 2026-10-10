@@ -271,17 +271,22 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import { ArrowRight, CheckCircle2, LucideTruck, MapPin, Phone } from "lucide-react";
+import { ArrowLeft,  CheckCircle, CheckCircle2,  MapPin, Phone } from "lucide-react";
 import { setOrderRedux } from "@/redux/orderSlice";
 import { Button } from "../ui/button";
+import toast from "react-hot-toast";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const Order = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  usePageTitle('Order', '/icons/about.png');
 
   // Redux store se user aur order data nikalna
   const { user } = useSelector((store) => store.auth);
   const { orderGet, refreshTrigger } = useSelector((store) => store.orderStore);
+  console.log("🛒", orderGet)
 
   // States
   const [selectedOrderId, setSelectedOrderId] = useState(null); // User ne konsa order chuna hai
@@ -307,7 +312,7 @@ const Order = () => {
   }, [refreshTrigger]);
 
   const ordersList = orderGet?.orders || [];
-  console.log('Order list 💗',ordersList)
+  console.log('Order list 💗', ordersList)
 
   // Default selection: Pehla unpaid order auto-select karna
   useEffect(() => {
@@ -399,10 +404,29 @@ const Order = () => {
             );
 
             if (verifyRes.data?.success) {
-              await axios.patch(`/api/order/pay/${selectedOrder._id}`,{}, {
-                withCredentials:true
+              await axios.patch(`/api/order/pay/${selectedOrder._id}`, {}, {
+                withCredentials: true
               })
-              alert("Payment safal ho gaya!");
+              // alert("Payment safal ho gaya!");
+
+              toast.custom(
+                (t) => (
+                  <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/40 p-4">
+                    <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-xl">
+                      <CheckCircle className="mx-auto mb-3 h-12 w-12 text-emerald-500" />
+                      <h2 className="text-xl font-semibold">Payment Successful!</h2>
+                      <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="mt-5 w-full rounded-xl bg-zinc-900 py-3 text-white"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                ),
+                { duration: Infinity }
+              );
+
               fetchOrders(); // List update karna taaki status 'PAID' ho jaye
               navigate("/cart/order");
             } else {
@@ -444,8 +468,35 @@ const Order = () => {
   };
 
   if (!user) {
-          return <Navigate to="/login" replace />;
-      }
+    return <Navigate to="/login" replace />;
+  }
+
+
+  // if (!orderGet?.length || !orderGet) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-white px-4">
+  //       <div className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-zinc-50 p-8 text-center">
+  //         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#00FFFF]/15">
+  //           <FiPackage className="text-3xl text-[#00CCCC]" />
+  //         </div>
+
+  //         <h2 className="text-xl font-semibold text-zinc-800">
+  //           No Orders Yet
+  //         </h2>
+  //         <p className="mt-2 text-sm text-zinc-500">
+  //           Your orders will appear here.
+  //         </p>
+
+  //         <button onClick={() => navigate('/collections')}
+  //           className="mt-6 w-full rounded-xl bg-[#00FFFF] px-5 py-3 font-semibold text-zinc-900 hover:opacity-80"
+  //         >
+  //           Start Shopping
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
 
   return (
     <div className="mt-20 flex w-full flex-col gap-8 px-4 pb-10 sm:px-6 lg:flex-row lg:px-20 xl:px-40">
@@ -465,9 +516,8 @@ const Order = () => {
                   // Sirf unpaid order ko select karne ki permission
                   if (!isOrderPaid) setSelectedOrderId(order._id);
                 }}
-                className={`relative cursor-pointer rounded-xl border bg-white p-4 shadow-sm transition ${
-                  isSelected ? "border-cyan-500 ring-2 ring-cyan-400" : "border-gray-200"
-                } ${isOrderPaid ? "cursor-not-allowed bg-gray-50 opacity-80" : "hover:border-cyan-300"}`}
+                className={`relative cursor-pointer rounded-xl border bg-white p-4 shadow-sm transition ${isSelected ? "border-cyan-500 ring-2 ring-cyan-400" : "border-gray-200"
+                  } ${isOrderPaid ? "cursor-not-allowed bg-gray-50 opacity-80" : "hover:border-cyan-300"}`}
               >
                 {/* Header: Radio Button, Order ID aur Payment Status */}
                 <div className="flex items-center justify-between border-b pb-3">
@@ -591,18 +641,23 @@ const Order = () => {
                   {isProcessing
                     ? "Processing..."
                     : selectedOrder.payment?.isPaid
-                    ? "Already Paid"
-                    : `Pay ₹${selectedOrder.totalPrice?.amount || 0}`}
+                      ? "Already Paid"
+                      : `Pay ₹${selectedOrder.totalPrice?.amount || 0}`}
                 </button>
               </>
             ) : (
-              <p className="text-sm text-gray-500">Kripya payment karne ke liye ek unpaid order chunein.</p>
+              <p className="text-sm text-gray-500">Please select an unpaid order to make the payment.</p>
             )}
           </div>
         </div>
 
-        <Button onClick={() => navigate("/cart")} className="mt-5 w-full bg-gray-900 text-gray-50 hover:bg-gray-800 lg:mt-10">
-          Back to Cart <LucideTruck /> <ArrowRight />
+        <Button
+          onClick={() => navigate("/cart")}
+          className="mt-5 lg:mt-10 flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-300 bg-zinc-50 py-6 font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-100"
+        >
+          <ArrowLeft size={18} className="text-zinc-600" />
+          View My Orders
+          <MdOutlineShoppingCart size={20} className="text-zinc-700" />
         </Button>
       </div>
     </div>

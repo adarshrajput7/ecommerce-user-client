@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { MapPin, Phone, Check, Trash, Loader, LogOut, Save, SquarePlus, Loader2, ArrowRight, LucideTruck, ChevronRight } from "lucide-react";
+import { MapPin, Phone, Check, Trash, LogOut, Save, SquarePlus, Loader2, ArrowRight, LucideTruck, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 // import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, } from "./ui/alert-dialog";
 import { useState } from "react";
 import axios from "../api/axios";
-// import { toast } from "react-toastify";
 import { logout, setLoading, setUser } from "@/redux/authSlice";
 import { Navigate, useNavigate } from "react-router-dom";
-import Order from "./cart/Orders";
 import toast from "react-hot-toast";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const Profile = () => {
+    usePageTitle('Profile', '/icons/home.png');
     const [isOpen, setIsOpen] = useState(false);
     const { user, loading } = useSelector(store => store.auth)
-    console.log(user)
+    console.log(loading)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -76,8 +76,9 @@ const Profile = () => {
 
 
     const addAddressHandler = async () => {
+
         try {
-            setLoading(true)
+             dispatch(setLoading(true));
             const res = await axios.post(`/api/auth/users/me/addresses`, {
                 "street": editAddress.street,
                 "city": editAddress.city,
@@ -125,7 +126,7 @@ const Profile = () => {
             }
         }
 
-        finally { setLoading(false) }
+        finally {  dispatch(setLoading(true));}
     }
 
     if (!user) {
@@ -214,7 +215,7 @@ const Profile = () => {
 
                     {/* Address */}
                     <div className="mt-5 ">
-                        <Button onClick={() => setIsOpen(true)} className='mb-2 text-black'><SquarePlus /> Add Address</Button>
+                        <Button onClick={() => setIsOpen(true)} className='mb-2 text-black border-[#666666] rounded-sm'><SquarePlus /> Add Address</Button>
                         <div className="mb-3 flex items-center justify-between">
                             <h2 className="font-semibold text-slate-800">Saved Addresses</h2>
                             <span className="text-sm text-slate-400">
@@ -387,11 +388,9 @@ const Profile = () => {
                                             Cancel
                                         </AlertDialogCancel>
 
-                                        <AlertDialogAction onClick={() => addAddressHandler()} className="bg-[#00FFFF] text-[#666666] hover:bg-[#00e6e6]"> {
-                                            loading ? <><Loader2 className="animate-spin" /> Saving...</> : <><Save /> Save Address</>
+                                        <AlertDialogAction onClick={() => addAddressHandler()} className="bg-[#00FFFF] text-[#666666] border border-[#666666] rounded-xs hover:bg-[#00e6e6]"> {
+                                            loading ? <><Loader2 className="animate-spin" /> Saving...</> : <>Save Address</>
                                         }
-
-
                                         </AlertDialogAction>
                                     </AlertDialogFooter>
                                 </AlertDialogContent>

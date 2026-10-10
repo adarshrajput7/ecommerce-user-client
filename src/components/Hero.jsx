@@ -1,15 +1,3 @@
-
-// const Hero = () => {
-//   return (
-//       <div>
-//       <img src="https://i.pinimg.com/1200x/43/59/be/4359be63c618ee5a0267c35fdd775d80.jpg" alt="" className="w-screen h-screen object-cover block m-0" />
-//     </div>
-//   )
-// }
-
-// export default Hero
-
-
 import { useEffect, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 

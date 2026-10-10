@@ -30,7 +30,7 @@ const authSlice = createSlice({
     // App start hone par initially user null hoga
     // Backend se check hone ke baad user yahan set hoga
     initialState: {
-        loading: true,
+        loading: false,
         user: null,
         isSearchOpen: false,
         searchDataRedux: ""

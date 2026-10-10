@@ -69,9 +69,9 @@ const Navbar = ({ transparent }) => {
 
   return (
     // <nav className={`fixed top-0 left-0 w-full z-200 ${transparent ? "bg-transparent text-white" : "bg-white text-black"}`}>
-    <nav className={`absolute top-0 left-0 w-full z-200 ${menuOpen ? "bg-white text-black!" : ''} ${transparent ? "lg:bg-transparent text-white lg:text-white hover:bg-white hover:text-black" : "bg-white text-black"} group`}>
+    <nav className={`absolute top-0 left-0 w-full z-200 ${menuOpen ? "bg-white text-black! " : ''} ${transparent ? "lg:bg-transparent text-white lg:text-white hover:bg-white hover:text-black" : "bg-white text-black"} group`}>
 
-      <div className="relative flex items-center justify-between px-4 lg:px-10 py-4">
+      <div className={`relative flex items-center justify-between px-4 lg:px-10 py-4 ${transparent ? "" : "border-b border-gray-100" } `}>
 
         {/* LEFT */}
         <div className="flex items-center gap-4">
@@ -88,7 +88,7 @@ const Navbar = ({ transparent }) => {
           {/* <FiSearch size={27} onClick={() => dispatch(setSearchOpen(true))} className="lg:hidden cursor-pointer" /> */}
 
           {/* SAME MENU */}
-          <div className={`flex gap-6 fixed lg:static top-0 z-50 left-0 h-full mt-15 lg:mt-0 lg:h-auto w-full lg:w-auto flex-col lg:flex-row items-start lg:items-center bg-white  lg:bg-transparent p-6 lg:p-0 transition-transform duration-300 ${menuOpen ? "translate-x-0 flex justify-between" : "-translate-x-full lg:translate-x-0"}`}>
+          <div className={`flex gap-6 fixed lg:static top-0 z-50 left-0 h-full mt-15 lg:mt-0 lg:h-auto w-full lg:w-auto flex-col lg:flex-row items-start lg:items-center bg-white  lg:bg-transparent p-6 lg:p-0 transition-transform duration-300 ${menuOpen ? "translate-x-0 flex justify-between " : "-translate-x-full lg:translate-x-0"}`}>
 
             {/* Close */}
             {/* <button onClick={() => setMenuOpen(false)} className="lg:hidden self-end mb-2">
@@ -96,7 +96,7 @@ const Navbar = ({ transparent }) => {
             </button> */}
 
             {/* MENU ITEMS */}
-            <div className={`lg:flex w-full gap-5 z-300 cursor-pointer text-4xl lg:text-base font-medium ${menuOpen ? "text-gray-500 pl-1 flex flex-col mt-5" : ''}`}>
+            <div className={`lg:flex w-full gap-5 z-300 cursor-pointer text-4xl lg:text-base font-medium ${menuOpen ? "text-gray-500 pl-1 flex flex-col mt-5 " : ''}`}>
               <p onClick={() => { navigate("/collections"); setMenuOpen(false) }} className="flex justify-between items-center"><span>Featured</span> <IoIosArrowRoundForward  className={`${menuOpen ? '': "hidden"}`} /></p>
               <p onClick={() => {navigate("/collections-all-women"); setMenuOpen(false)}} className="flex justify-between items-center"><span>Women</span> <IoIosArrowRoundForward  className={`${menuOpen ? '': "hidden"}`} /></p>
               <p onClick={() =>{ navigate("/collections-all-men"); setMenuOpen(false)}} className="flex justify-between items-center"><span>Men</span> <IoIosArrowRoundForward  className={`${menuOpen ? '': "hidden"}`} /></p>

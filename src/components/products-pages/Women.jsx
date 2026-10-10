@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { setFilter } from "@/redux/filterSlice";
 import { useDispatch } from "react-redux";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const LIMIT = 12;
 
@@ -13,7 +14,7 @@ const Women = ({ filters }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const dispatch = useDispatch()
-
+    usePageTitle('Women Collection', '/icons/about.png');
     // useEffect(() => { setPage(1); }, [filters]);  
     const MEN = "WOMEN"
 

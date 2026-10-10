@@ -1,11 +1,11 @@
 import axios from "../api/axios";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Link2Off, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 // import { toast } from "react-toastify";
 import { setLoading, setUser } from "../redux/authSlice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { setTriggerRefresh } from "@/redux/orderSlice";
 import toast from "react-hot-toast";
 
@@ -90,41 +90,41 @@ export default function Login() {
 
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center lg:px-0 px-3 bg-black/10">
+            <div className="min-h-screen flex items-center justify-center lg:px-0 px-5 bg-black/10">
                 {/* //   <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4"> */}
-                <div className="w-full max-w-md">
+                <div className="w-full max-w-xs ">
 
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-4 sm:p-8">
-                        {/* <X onClick={() => setLoginOpen(false)} className="ml-auto block" /> */}
-                        {/* Header */}
-                        <div className="text-center mb-7">
-                            <h1 className="text-2xl font-bold text-slate-900">Welcome Back</h1>
-
-                            <p className="mt-2 text-sm text-slate-500">Login to your account</p>
+                    <div className="bg-white rounded-sm border border-slate-200 shadow-xl p-3">
+                        <div className="text-center mb-4">
+                            <h1 className="text-xl font-bold text-slate-900">
+                                Welcome Back
+                            </h1>
+                            <p className="mt-1 text-xs text-slate-500">
+                                Login to your account
+                            </p>
                         </div>
 
-                        {/* Google Auth */}
-                        <button type="button" onClick={handleGoogleAuth} className="w-full flex items-center justify-center gap-3   rounded-lg border border-slate-300 bg-white px-4 py-3   text-sm font-medium text-slate-700   hover:bg-slate-50 transition">
-                            <FcGoogle size={22} />
+                        <button
+                            type="button"
+                            onClick={handleGoogleAuth}
+                            className="w-full flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 transition"
+                        >
+                            <FcGoogle size={19} />
                             Continue with Google
                         </button>
 
-                        {/* Divider */}
-                        <div className="flex items-center gap-3 my-6">
+                        <div className="flex items-center gap-3 my-3">
                             <div className="h-px flex-1 bg-slate-200" />
-
                             <span className="text-xs text-slate-400">OR</span>
-
                             <div className="h-px flex-1 bg-slate-200" />
                         </div>
 
-                        {/* Login Form */}
-                        <form onSubmit={handleSubmit} className="space-y-5">
+                        <form onSubmit={handleSubmit} className="space-y-3">
                             {/* Username / Email */}
                             <div>
                                 <label
                                     htmlFor="usernameOrEmail"
-                                    className="block text-sm font-medium text-slate-700 mb-1.5"
+                                    className="block text-xs font-medium text-slate-700 mb-1"
                                 >
                                     Username or Email
                                 </label>
@@ -137,30 +137,26 @@ export default function Login() {
                                     onChange={handleChange}
                                     placeholder="Username or email"
                                     required
-                                    className="w-full rounded-lg border border-slate-300
-                           px-4 py-3 text-sm
-                           outline-none transition
-                           focus:border-[#00cccc]
-                           focus:ring-2 focus:ring-[#00ffff]/20"
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-[#00cccc] focus:ring-2 focus:ring-[#00ffff]/20"
                                 />
                             </div>
 
                             {/* Password */}
                             <div>
-                                <div className="flex items-center justify-between mb-1.5">
+                                <div className="flex items-center justify-between mb-1">
                                     <label
                                         htmlFor="password"
-                                        className="block text-sm font-medium text-slate-700"
+                                        className="block text-xs font-medium text-slate-700"
                                     >
                                         Password
                                     </label>
 
-                                    <a
+                                    <Link
                                         href="/forgot-password"
                                         className="text-xs text-[#666666] hover:underline"
                                     >
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <div className="relative">
@@ -172,46 +168,45 @@ export default function Login() {
                                         onChange={handleChange}
                                         placeholder="••••••••"
                                         required
-                                        className="w-full rounded-lg border border-slate-300
-                             px-4 py-3 pr-16 text-sm
-                             outline-none transition
-                             focus:border-[#00cccc]
-                             focus:ring-2 focus:ring-[#00ffff]/20"
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 pr-12 text-sm outline-none transition focus:border-[#00cccc] focus:ring-2 focus:ring-[#00ffff]/20"
                                     />
 
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 top-1/2
-                             -translate-y-1/2
-                             text-xs font-medium
-                             text-[#666666]
-                             hover:text-slate-900"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-[#666666] hover:text-slate-900"
                                     >
-                                        {showPassword ? <Eye /> : <EyeOff />}
+                                        {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
                                     </button>
                                 </div>
                             </div>
 
                             {/* Login Button */}
-                            <button type="submit" className="w-full rounded-lg px-4 py-2.5 text-sm font-semibold bg-[#00FFFF] text-[#666666] hover:bg-[#00e6e6] transition flex items-center justify-center">
-                                {loading ? (<Loader2 className="animate-spin" />) : ("Login")}
+                            <button
+                                type="submit"
+                                className="w-full rounded-sm px-3 py-2 text-sm font-semibold bg-[#00FFFF] text-[#666666] hover:bg-[#00e6e6] transition flex items-center justify-center border border-[#666666] "
+                            >
+                                {loading ? (
+                                    <Loader2 size={16} className="animate-spin" />
+                                ) : (
+                                    "Login"
+                                )}
                             </button>
                         </form>
 
-                        {/* Register */}
-                        <p className="text-center text-sm text-slate-500 mt-6">
+                        <p className="text-center text-xs text-slate-500 mt-3">
                             Don't have an account?{" "}
-                            <a
-                                href="/register"
-                                className="font-medium text-blue-500 hover:underline"
-                            >
-                                Create Account
-                            </a>
+                            <Link
+                            to="/register"
+                            className="font-medium text-blue-600 hover:underline"
+                        >
+                            Register
+                        </Link>
                         </p>
                     </div>
                 </div>
             </div>
+
 
 
         </>

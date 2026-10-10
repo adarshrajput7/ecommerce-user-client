@@ -1,7 +1,7 @@
 
 import axios from '../../api/axios';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Heart, CheckCircle2, CircleX, ChevronRight } from 'lucide-react';
 
 // Swiper React components और styles
@@ -14,10 +14,15 @@ import FeaturedSwiper from '../FeaturedSwiper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTriggerRefresh } from '@/redux/orderSlice';
 import toast from 'react-hot-toast';
+import usePageTitle from '@/hooks/usePageTitle';
+import { FaCcMastercard, FaCcVisa, FaGooglePay } from 'react-icons/fa6';
+import { SiAmericanexpress } from "react-icons/si";
+import { BsFillCreditCard2FrontFill } from "react-icons/bs";
 
 const ProductsView = () => {
     const params = useParams();
     const id = params?.id;
+
 
     const [product, setProduct] = useState(null);
     const [selectedSize, setSelectedSize] = useState();
@@ -27,7 +32,7 @@ const ProductsView = () => {
     const navigate = useNavigate()
 
     // const sizes = ['UK 6', 'UK 7', 'UK 8', 'UK 9', 'UK 10', 'UK 11', 'UK 12'];
-    const sizes = product?.category === "FOOTWEAR" ? ['UK 6', 'UK 7', 'UK 8', 'UK 9', 'UK 10', 'UK 11', 'UK 12'] : product?.category === "CLOTHING" ? ['S', 'M', 'L'] :  product?.category === "ACTIVE_LIFESTYLE" ? ['S', 'M', 'L'] : [];
+    const sizes = product?.category === "FOOTWEAR" ? ['UK 6', 'UK 7', 'UK 8', 'UK 9', 'UK 10', 'UK 11', 'UK 12'] : product?.category === "CLOTHING" ? ['S', 'M', 'L'] : product?.category === "ACTIVE_LIFESTYLE" ? ['S', 'M', 'L'] : [];
 
 
 
@@ -52,6 +57,7 @@ const ProductsView = () => {
             getProductById();
         }
     }, [id]);
+
 
 
     const addToCart = async () => {
@@ -98,6 +104,9 @@ const ProductsView = () => {
         ];
 
     console.log("images:", images);
+    usePageTitle(
+        product ? `${product.title}` : 'Loading... | MyApp', '/favicon.icon'
+    );
 
 
     return (
@@ -128,7 +137,7 @@ const ProductsView = () => {
                         </Swiper>
                     </div> */}
 
-                    
+
 
                     {/* MOBILE VIEW: Swiper Carousel */}
                     <div className="block md:hidden w-full mt-4">
@@ -166,7 +175,7 @@ const ProductsView = () => {
                     <div className="hidden md:flex flex-col gap-4">
 
                         <div className="relative w-full h-112 lg:h-125 bg-[#f8f8f8] rounded-xl flex items-center justify-center p-0 overflow-hidden">
-                            
+
                             <img
                                 src={images[selectedImage]}
                                 alt={product?.name || "Product"}
@@ -279,12 +288,12 @@ const ProductsView = () => {
                     </button>
 
                     {/* Badges */}
-                    <div className="flex items-center justify-center gap-3 mt-6 pt-4 border-t border-gray-100">
-                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">AMEX</span>
-                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">GPay</span>
-                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">Mastercard</span>
-                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">RuPay</span>
-                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">VISA</span>
+                    <div className="flex items-center justify-center gap-5 mt-5 p-2 border border-gray-200">
+                        <FaGooglePay className="text-[#5F6368] text-4xl" />
+                        <BsFillCreditCard2FrontFill className="text-[#64748B] text-3xl" />
+                        <SiAmericanexpress className="text-[#016FD0] text-4xl" />
+                        <FaCcMastercard className="text-[#EB001B] text-4xl" />
+                        <FaCcVisa className="text-[#1434CB] text-4xl" />
                     </div>
                 </div>
 

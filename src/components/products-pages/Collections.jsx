@@ -153,6 +153,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import { setProductsRedux } from "@/redux/productsSlice";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const LIMIT = 12;
 
@@ -170,6 +171,7 @@ const Collections = ({ filters }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
+    usePageTitle('All-Collections', '/icons/about.png');
 
     const [prevFilters, setPrevFilters] = useState(filters);
     if (filters !== prevFilters) {

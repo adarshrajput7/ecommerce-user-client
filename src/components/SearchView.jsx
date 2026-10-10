@@ -10,7 +10,7 @@ const LIMIT = 12;
 
 const SearchView = ({ filters }) => {
     const [searchParams, setSearchParams] = useSearchParams();
-
+    usePageTitle('Search Items', '/icons/home.png');
     // URL se initial page read karo
     const initialPage = Number(searchParams.get("page")) || 1;
     const [page, setPage] = useState(initialPage);

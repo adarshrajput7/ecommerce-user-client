@@ -187,7 +187,7 @@ const Search = () => {
                         <div className="flex justify-center mt-6 pb-6">
                             <button
                                 onClick={handleViewMore}
-                                className="flex items-center gap-2 bg-[#00FFFF] text-black px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#00efef] transition active:scale-95 shadow-md"
+                                className="flex items-center gap-2 bg-[#00FFFF] text-black px-8 py-3 mb-25 rounded-full text-sm font-semibold hover:bg-[#00efef] transition active:scale-95 shadow-md"
                             >
                                 View All
                                 <ArrowRight size={16} />
